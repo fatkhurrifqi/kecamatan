@@ -1,0 +1,60 @@
+<%- include('../partials/header', { title: title }) %>
+<div class="page-header">
+  <div>
+    <h1>Permohonan Surat</h1>
+    <p class="page-subtitle">Kelola seluruh permohonan pelayanan surat warga.</p>
+  </div>
+  <a href="/permohonan/baru" class="btn-primary">+ Permohonan Baru</a>
+</div>
+
+<form method="GET" class="card toolbar">
+  <div class="filter-group">
+    <label>Cari (nama / no. tiket)</label>
+    <input name="q" value="<%= filter.q %>" placeholder="Cari data permohonan" />
+  </div>
+  <div class="filter-group">
+    <label>Status</label>
+    <select name="status">
+      <option value="">Semua</option>
+      <% ['diajukan','diproses','selesai','ditolak'].forEach(s => { %>
+        <option value="<%= s %>" <%= filter.status === s ? 'selected' : '' %>><%= s %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Jenis Layanan</label>
+    <select name="jenis_layanan_id">
+      <option value="">Semua</option>
+      <% jenisLayananList.forEach(j => { %>
+        <option value="<%= j.id %>" <%= String(filter.jenis_layanan_id) === String(j.id) ? 'selected' : '' %>><%= j.nama_layanan %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="inline-actions">
+    <button type="submit" class="btn-secondary">Filter</button>
+    <a href="/permohonan" class="btn-ghost">Reset</a>
+  </div>
+</form>
+
+<div class="card p-4">
+  <div class="table-shell">
+    <table class="tbl">
+      <thead><tr><th>No. Tiket</th><th>Pemohon</th><th>Jenis Layanan</th><th>Tarif</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead>
+      <tbody>
+        <% list.forEach(p => { %>
+        <tr>
+          <td><span class="font-semibold"><%= p.nomor_tiket %></span></td>
+          <td><%= p.penduduk_nama %></td>
+          <td><%= p.jenis_layanan_nama %></td>
+          <td>Rp <%= Number(p.tarif).toLocaleString('id-ID') %></td>
+          <td><%= new Date(p.tanggal_ajuan).toLocaleDateString('id-ID') %></td>
+          <td><%- include('../partials/status_badge', { status: p.status }) %></td>
+          <td><a href="/permohonan/<%= p.id %>" class="text-sm font-semibold text-blue-600">Detail</a></td>
+        </tr>
+        <% }) %>
+        <% if (list.length === 0) { %><tr><td colspan="7" class="text-center text-slate-400 py-4">Belum ada data</td></tr><% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%- include('../partials/footer') %>

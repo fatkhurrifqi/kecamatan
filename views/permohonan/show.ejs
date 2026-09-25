@@ -1,0 +1,61 @@
+<%- include('../partials/header', { title: title }) %>
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-xl font-bold">Detail Permohonan — <%= item.nomor_tiket %></h1>
+  <a href="/permohonan" class="text-sm text-slate-500">&larr; Kembali</a>
+</div>
+
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+  <div class="card p-5 md:col-span-2">
+    <table class="text-sm w-full">
+      <tr><td class="py-1 text-slate-500 w-40">Pemohon</td><td class="font-medium"><%= item.penduduk_nama %></td></tr>
+      <tr><td class="py-1 text-slate-500">Jenis Layanan</td><td><%= item.jenis_layanan_nama %></td></tr>
+      <tr><td class="py-1 text-slate-500">Tarif</td><td>Rp <%= Number(item.tarif).toLocaleString('id-ID') %></td></tr>
+      <tr><td class="py-1 text-slate-500">Tanggal Ajuan</td><td><%= new Date(item.tanggal_ajuan).toLocaleString('id-ID') %></td></tr>
+      <tr><td class="py-1 text-slate-500">Petugas</td><td><%= item.petugas_nama %></td></tr>
+      <tr><td class="py-1 text-slate-500">Keterangan</td><td><%= item.keterangan || '-' %></td></tr>
+      <tr><td class="py-1 text-slate-500">Status</td><td><%- include('../partials/status_badge', { status: item.status }) %></td></tr>
+    </table>
+    <div class="mt-4">
+      <a href="/permohonan/<%= item.id %>/edit" class="text-blue-600 text-xs">Edit Data</a>
+    </div>
+  </div>
+
+  <div class="card p-5">
+    <div class="font-semibold text-sm mb-3">Ubah Status</div>
+    <form action="/permohonan/<%= item.id %>/status" method="POST" class="space-y-2">
+      <select name="status" class="w-full border rounded px-3 py-2 text-sm">
+        <% ['diajukan','diproses','selesai','ditolak'].forEach(s => { %>
+          <option value="<%= s %>" <%= item.status === s ? 'selected' : '' %>><%= s %></option>
+        <% }) %>
+      </select>
+      <button class="w-full bg-slate-900 text-white text-sm py-2 rounded hover:bg-slate-800">Simpan Status</button>
+    </form>
+    <% if (Number(item.tarif) > 0) { %>
+    <div class="mt-4 pt-4 border-t">
+      <a href="/pembayaran/baru?permohonan_id=<%= item.id %>" class="block text-center bg-green-600 text-white text-sm py-2 rounded hover:bg-green-700">💵 Catat Pembayaran</a>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<div class="card p-5">
+  <div class="font-semibold mb-3">Riwayat Pembayaran Terkait</div>
+  <table class="tbl">
+    <thead><tr><th>Tanggal</th><th>Nominal</th><th>Metode</th><th>Status</th><th>Petugas</th></tr></thead>
+    <tbody>
+      <% if (pembayaran.length === 0) { %>
+        <tr><td colspan="5" class="text-center text-slate-400 py-4">Belum ada pembayaran tercatat</td></tr>
+      <% } %>
+      <% pembayaran.forEach(pb => { %>
+        <tr>
+          <td><%= new Date(pb.tanggal_bayar).toLocaleString('id-ID') %></td>
+          <td>Rp <%= Number(pb.nominal).toLocaleString('id-ID') %></td>
+          <td class="capitalize"><%= pb.metode_bayar %></td>
+          <td><%- include('../partials/status_badge', { status: pb.status }) %></td>
+          <td><%= pb.petugas_nama %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<%- include('../partials/footer') %>

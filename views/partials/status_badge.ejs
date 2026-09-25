@@ -1,0 +1,8 @@
+<%
+let cls = 'badge-gray';
+if (['diajukan','Belum Lunas'].includes(status)) cls = 'badge-yellow';
+else if (['diproses'].includes(status)) cls = 'badge-blue';
+else if (['selesai','Lunas'].includes(status)) cls = 'badge-green';
+else if (['ditolak','Dibatalkan'].includes(status)) cls = 'badge-red';
+%>
+<span class="badge <%= cls %>"><%= status %></span>

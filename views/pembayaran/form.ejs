@@ -1,0 +1,51 @@
+<%- include('../partials/header', { title: title }) %>
+<h1 class="text-xl font-bold mb-4">Catat Pembayaran</h1>
+<form action="/pembayaran" method="POST" enctype="multipart/form-data" class="card p-6 max-w-lg space-y-4">
+  <div>
+    <label class="block text-sm font-medium mb-1">Permohonan</label>
+    <% if (permohonanDetail) { %>
+      <input type="hidden" name="permohonan_id" value="<%= permohonanDetail.id %>" />
+      <div class="text-sm border rounded px-3 py-2 bg-slate-50">
+        <%= permohonanDetail.nomor_tiket %> — <%= permohonanDetail.penduduk_nama %> — <%= permohonanDetail.jenis_layanan_nama %>
+      </div>
+    <% } else { %>
+      <select name="permohonan_id" required class="w-full border rounded px-3 py-2 text-sm">
+        <option value="">-- Pilih Permohonan --</option>
+        <% permohonanList.forEach(p => { %>
+          <option value="<%= p.id %>"><%= p.label %></option>
+        <% }) %>
+      </select>
+    <% } %>
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Nominal (Rp)</label>
+    <input name="nominal" type="number" min="0" required value="<%= permohonanDetail ? permohonanDetail.tarif : '' %>" class="w-full border rounded px-3 py-2 text-sm" />
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Metode Bayar</label>
+    <select name="metode_bayar" required class="w-full border rounded px-3 py-2 text-sm">
+      <option value="tunai">Tunai</option>
+      <option value="transfer">Transfer</option>
+    </select>
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Status</label>
+    <select name="status" class="w-full border rounded px-3 py-2 text-sm">
+      <option value="Lunas">Lunas</option>
+      <option value="Belum Lunas">Belum Lunas</option>
+    </select>
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Upload Bukti (opsional, JPG/PNG/PDF, maks 3MB)</label>
+    <input type="file" name="bukti_file" accept=".jpg,.jpeg,.png,.pdf" class="w-full text-sm" />
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Catatan (opsional)</label>
+    <textarea name="catatan" rows="2" class="w-full border rounded px-3 py-2 text-sm"></textarea>
+  </div>
+  <div class="flex gap-2">
+    <button class="bg-green-600 text-white text-sm px-4 py-2 rounded hover:bg-green-700">Simpan Pembayaran</button>
+    <a href="/pembayaran" class="text-sm px-4 py-2 rounded border">Batal</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

@@ -1,0 +1,36 @@
+<%- include('../partials/header', { title: title }) %>
+<h1 class="text-xl font-bold mb-4"><%= title %></h1>
+<form action="<%= item ? '/permohonan/' + item.id : '/permohonan' %>" method="POST" class="card p-6 max-w-lg space-y-4">
+  <div>
+    <label class="block text-sm font-medium mb-1">Pemohon (Warga)</label>
+    <select name="penduduk_id" required class="w-full border rounded px-3 py-2 text-sm">
+      <option value="">-- Pilih --</option>
+      <% pendudukList.forEach(pd => { %>
+        <option value="<%= pd.id %>" <%= item && String(item.penduduk_id) === String(pd.id) ? 'selected' : '' %>>
+          <%= pd.nama %> (NIK: <%= pd.nik %>)
+        </option>
+      <% }) %>
+    </select>
+    <div class="text-xs text-slate-400 mt-1">Belum ada di daftar? <a href="/penduduk/baru" class="text-blue-600">Tambah data penduduk</a> dulu.</div>
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Jenis Layanan / Surat</label>
+    <select name="jenis_layanan_id" required class="w-full border rounded px-3 py-2 text-sm">
+      <option value="">-- Pilih --</option>
+      <% jenisLayananList.forEach(j => { %>
+        <option value="<%= j.id %>" <%= item && String(item.jenis_layanan_id) === String(j.id) ? 'selected' : '' %>>
+          <%= j.nama_layanan %> (Rp <%= Number(j.tarif).toLocaleString('id-ID') %>)
+        </option>
+      <% }) %>
+    </select>
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Keterangan (opsional)</label>
+    <textarea name="keterangan" rows="3" class="w-full border rounded px-3 py-2 text-sm"><%= item ? item.keterangan : '' %></textarea>
+  </div>
+  <div class="flex gap-2">
+    <button class="bg-slate-900 text-white text-sm px-4 py-2 rounded hover:bg-slate-800">Simpan</button>
+    <a href="/permohonan" class="text-sm px-4 py-2 rounded border">Batal</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

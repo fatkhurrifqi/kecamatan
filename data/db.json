@@ -1,0 +1,138 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password_hash": "$2a$08$/pro8M2092tHNoWxMelpbe.kTmKCm7jCox1YEooc195BcRqzExvc6",
+      "nama": "Camat / Sekretaris Kecamatan",
+      "role": "superadmin"
+    },
+    {
+      "id": 2,
+      "username": "petugas1",
+      "password_hash": "$2a$08$Rv0TO2Mc.utpIl4zjkFt0OScvrMjwE5IwppIjrneup53EViHZa7sy",
+      "nama": "Petugas Loket 1",
+      "role": "petugas"
+    },
+    {
+      "id": 3,
+      "username": "kasir1",
+      "password_hash": "$2a$08$QdWlEavYjpGtjhpy57a7YO.KtdVaDcwpNccGnR7XEUT7TLxW.P6se",
+      "nama": "Bendahara / Kasir",
+      "role": "bendahara"
+    }
+  ],
+  "penduduk": [
+    {
+      "id": 1,
+      "nik": "3301012001990001",
+      "nama": "Budi Santoso",
+      "alamat": "Jl. Merdeka No. 1",
+      "rt_rw": "001/002",
+      "no_hp": "081234567890"
+    },
+    {
+      "id": 2,
+      "nik": "3301015505850002",
+      "nama": "Siti Aminah",
+      "alamat": "Jl. Kenanga No. 5",
+      "rt_rw": "003/001",
+      "no_hp": "081298765432"
+    }
+  ],
+  "jenis_layanan": [
+    {
+      "id": 1,
+      "nama_layanan": "Surat Keterangan Domisili",
+      "tarif": 10000,
+      "keterangan": "Untuk keperluan administrasi domisili"
+    },
+    {
+      "id": 2,
+      "nama_layanan": "Surat Keterangan Tidak Mampu (SKTM)",
+      "tarif": 0,
+      "keterangan": "Gratis, untuk bantuan sosial/beasiswa"
+    },
+    {
+      "id": 3,
+      "nama_layanan": "Surat Pengantar KTP/KK",
+      "tarif": 5000,
+      "keterangan": "Pengantar pembuatan KTP/KK"
+    },
+    {
+      "id": 4,
+      "nama_layanan": "Surat Keterangan Usaha",
+      "tarif": 15000,
+      "keterangan": "Untuk keperluan usaha/UMKM"
+    }
+  ],
+  "permohonan": [],
+  "pembayaran": [],
+  "pengaduan": [],
+  "pengumuman": [
+    {
+      "id": 1,
+      "judul": "Selamat Datang",
+      "isi": "Website pelayanan Kantor Kecamatan resmi digunakan.",
+      "tanggal_publish": "2026-09-25T21:59:28.170Z",
+      "status": "tampil"
+    }
+  ],
+  "log_aktivitas": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "aksi": "login",
+      "tabel_terkait": "users",
+      "data_id": 1,
+      "waktu": "2026-09-25T22:03:29.597Z",
+      "detail": "admin login"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "aksi": "login",
+      "tabel_terkait": "users",
+      "data_id": 1,
+      "waktu": "2026-09-25T22:08:22.640Z",
+      "detail": "admin login"
+    },
+    {
+      "id": 3,
+      "user_id": 2,
+      "aksi": "login",
+      "tabel_terkait": "users",
+      "data_id": 2,
+      "waktu": "2026-09-25T22:08:53.340Z",
+      "detail": "petugas1 login"
+    },
+    {
+      "id": 4,
+      "user_id": 1,
+      "aksi": "login",
+      "tabel_terkait": "users",
+      "data_id": 1,
+      "waktu": "2026-09-25T22:14:58.613Z",
+      "detail": "admin login"
+    },
+    {
+      "id": 5,
+      "user_id": 1,
+      "aksi": "login",
+      "tabel_terkait": "users",
+      "data_id": 1,
+      "waktu": "2026-09-25T22:17:56.641Z",
+      "detail": "admin login"
+    }
+  ],
+  "counters": {
+    "users": 3,
+    "penduduk": 2,
+    "jenis_layanan": 4,
+    "permohonan": 0,
+    "pembayaran": 0,
+    "pengaduan": 0,
+    "pengumuman": 1,
+    "log_aktivitas": 5
+  }
+}

@@ -1,0 +1,37 @@
+<%- include('../partials/header', { title: 'Login' }) %>
+<div class="auth-shell">
+  <div class="auth-visual">
+    <span class="auth-chip">Kantor Kecamatan</span>
+    <h2>SIM Kecamatan</h2>
+    <p>Sistem Informasi Manajemen pelayanan publik, data penduduk, dan keuangan wilayah kecamatan secara terintegrasi.</p>
+    <ul class="auth-points">
+      <li>Pelayanan surat dan permohonan terstruktur</li>
+      <li>Monitoring pengaduan dan data penduduk</li>
+      <li>Rekap kas & laporan keuangan real-time</li>
+    </ul>
+  </div>
+
+  <div class="auth-panel">
+    <div class="brand">
+      <div class="title">Masuk ke Sistem</div>
+      <div class="subtitle">Sistem Informasi Pelayanan & Keuangan</div>
+    </div>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+    <div class="auth-alert"><%= error %></div>
+    <% } %>
+
+    <form action="/login" method="POST" class="auth-form">
+      <div class="field">
+        <label>Username</label>
+        <input name="username" required autofocus placeholder="Masukkan username" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input name="password" type="password" required placeholder="Masukkan password" />
+      </div>
+      <button type="submit">Masuk</button>
+    </form>
+  </div>
+</div>
+<%- include('../partials/footer') %>

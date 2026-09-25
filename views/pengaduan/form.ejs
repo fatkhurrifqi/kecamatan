@@ -1,0 +1,20 @@
+<%- include('../partials/header', { title: title }) %>
+<h1 class="text-xl font-bold mb-4"><%= title %></h1>
+<form action="/pengaduan" method="POST" class="card p-6 max-w-lg space-y-4">
+  <div><label class="block text-sm font-medium mb-1">Nama Pengadu</label><input name="nama" required class="w-full border rounded px-3 py-2 text-sm" /></div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Kategori</label>
+    <select name="kategori" class="w-full border rounded px-3 py-2 text-sm">
+      <option value="pelayanan">Pelayanan</option>
+      <option value="infrastruktur">Infrastruktur</option>
+      <option value="keamanan">Keamanan</option>
+      <option value="umum">Umum</option>
+    </select>
+  </div>
+  <div><label class="block text-sm font-medium mb-1">Isi Pengaduan</label><textarea name="isi" rows="4" required class="w-full border rounded px-3 py-2 text-sm"></textarea></div>
+  <div class="flex gap-2">
+    <button class="bg-slate-900 text-white text-sm px-4 py-2 rounded hover:bg-slate-800">Simpan</button>
+    <a href="/pengaduan" class="text-sm px-4 py-2 rounded border">Batal</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

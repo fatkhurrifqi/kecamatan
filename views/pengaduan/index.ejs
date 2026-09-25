@@ -1,0 +1,33 @@
+<%- include('../partials/header', { title: title }) %>
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-xl font-bold">Pengaduan Masyarakat</h1>
+  <a href="/pengaduan/baru" class="bg-slate-900 text-white text-sm px-4 py-2 rounded hover:bg-slate-800">+ Tambah</a>
+</div>
+<div class="card p-4 overflow-x-auto">
+  <table class="tbl">
+    <thead><tr><th>Tanggal</th><th>Pengadu</th><th>Kategori</th><th>Isi</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <% list.forEach(p => { %>
+      <tr>
+        <td><%= new Date(p.tanggal).toLocaleDateString('id-ID') %></td>
+        <td><%= p.nama %></td>
+        <td class="capitalize"><%= p.kategori %></td>
+        <td class="max-w-xs truncate" title="<%= p.isi %>"><%= p.isi %></td>
+        <td><%- include('../partials/status_badge', { status: p.status }) %></td>
+        <td>
+          <form action="/pengaduan/<%= p.id %>/status" method="POST" class="flex gap-1">
+            <select name="status" class="border rounded text-xs px-1 py-1">
+              <% ['diterima','diproses','selesai'].forEach(s => { %>
+                <option value="<%= s %>" <%= p.status===s?'selected':'' %>><%= s %></option>
+              <% }) %>
+            </select>
+            <button class="text-blue-600 text-xs">Ubah</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+      <% if (list.length === 0) { %><tr><td colspan="6" class="text-center text-slate-400 py-4">Belum ada data</td></tr><% } %>
+    </tbody>
+  </table>
+</div>
+<%- include('../partials/footer') %>

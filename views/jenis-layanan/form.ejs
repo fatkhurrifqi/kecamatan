@@ -1,0 +1,21 @@
+<%- include('../partials/header', { title: title }) %>
+<h1 class="text-xl font-bold mb-4"><%= title %></h1>
+<form action="<%= item ? '/jenis-layanan/' + item.id : '/jenis-layanan' %>" method="POST" class="card p-6 max-w-lg space-y-4">
+  <div>
+    <label class="block text-sm font-medium mb-1">Nama Layanan</label>
+    <input name="nama_layanan" required value="<%= item ? item.nama_layanan : '' %>" class="w-full border rounded px-3 py-2 text-sm" />
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Tarif (Rp)</label>
+    <input name="tarif" type="number" min="0" value="<%= item ? item.tarif : 0 %>" class="w-full border rounded px-3 py-2 text-sm" />
+  </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Keterangan</label>
+    <textarea name="keterangan" rows="3" class="w-full border rounded px-3 py-2 text-sm"><%= item ? item.keterangan : '' %></textarea>
+  </div>
+  <div class="flex gap-2">
+    <button class="bg-slate-900 text-white text-sm px-4 py-2 rounded hover:bg-slate-800">Simpan</button>
+    <a href="/jenis-layanan" class="text-sm px-4 py-2 rounded border">Batal</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

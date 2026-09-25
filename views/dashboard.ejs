@@ -1,0 +1,70 @@
+<%- include('partials/header', { title: 'Dashboard' }) %>
+<div class="page-shell">
+  <div class="page-header">
+    <div>
+      <h1>Selamat datang, <%= currentUser.nama %> 👋</h1>
+      <p class="page-subtitle">Ringkasan aktivitas pelayanan kecamatan hari ini.</p>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <span class="icon">📄</span>
+      <span class="label">Permohonan Bulan Ini</span>
+      <div class="value"><%= stats.totalPermohonanBulanIni %></div>
+    </div>
+    <div class="kpi-card">
+      <span class="icon">⏳</span>
+      <span class="label">Menunggu Diproses</span>
+      <div class="value" style="color: #a16207"><%= stats.menunggu %></div>
+    </div>
+    <div class="kpi-card">
+      <span class="icon">📢</span>
+      <span class="label">Pengaduan Aktif</span>
+      <div class="value" style="color: #b91c1c"><%= stats.pengaduanAktif %></div>
+    </div>
+    <% if (['superadmin','bendahara'].includes(currentUser.role)) { %>
+    <div class="kpi-card">
+      <span class="icon">💰</span>
+      <span class="label">Kas Masuk Bulan Ini</span>
+      <div class="value" style="color: #15803d">Rp <%= stats.kasBulanIni.toLocaleString('id-ID') %></div>
+    </div>
+    <% } %>
+  </div>
+
+  <div class="card p-5">
+    <div class="flex items-center justify-between mb-4">
+      <div class="font-bold text-lg">Permohonan Terbaru</div>
+      <a href="/permohonan" class="text-sm font-medium text-blue-600 hover:text-blue-700">Lihat semua</a>
+    </div>
+    <div class="table-shell">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>No. Tiket</th>
+            <th>Pemohon</th>
+            <th>Jenis Layanan</th>
+            <th>Tanggal</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (stats.permohonanTerbaru.length === 0) { %>
+          <tr>
+            <td colspan="5" class="text-center text-slate-400 py-4">Belum ada data</td>
+          </tr>
+          <% } %> <% stats.permohonanTerbaru.forEach(p => { %>
+          <tr>
+            <td><a href="/permohonan/<%= p.id %>" class="text-blue-600 font-semibold"><%= p.nomor_tiket %></a></td>
+            <td><%= p.penduduk_nama %></td>
+            <td><%= p.jenis_layanan_nama %></td>
+            <td><%= new Date(p.tanggal_ajuan).toLocaleDateString('id-ID') %></td>
+            <td><%- include('partials/status_badge', { status: p.status }) %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%- include('partials/footer') %>

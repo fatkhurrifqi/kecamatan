@@ -1,0 +1,64 @@
+<%- include('../partials/header', { title: title }) %>
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-xl font-bold">Riwayat Pembayaran</h1>
+  <a href="/pembayaran/baru" class="bg-slate-900 text-white text-sm px-4 py-2 rounded hover:bg-slate-800">+ Catat Pembayaran</a>
+</div>
+
+<form method="GET" class="card p-4 mb-4 flex flex-wrap gap-3 items-end">
+  <div><label class="block text-xs mb-1">Cari</label><input name="q" value="<%= filter.q %>" class="border rounded px-3 py-2 text-sm" /></div>
+  <div><label class="block text-xs mb-1">Tanggal</label><input type="date" name="tanggal" value="<%= filter.tanggal %>" class="border rounded px-3 py-2 text-sm" /></div>
+  <div>
+    <label class="block text-xs mb-1">Status</label>
+    <select name="status" class="border rounded px-3 py-2 text-sm">
+      <option value="">Semua</option>
+      <% ['Lunas','Belum Lunas','Dibatalkan'].forEach(s => { %><option value="<%= s %>" <%= filter.status===s?'selected':'' %>><%= s %></option><% }) %>
+    </select>
+  </div>
+  <div>
+    <label class="block text-xs mb-1">Metode</label>
+    <select name="metode_bayar" class="border rounded px-3 py-2 text-sm">
+      <option value="">Semua</option>
+      <option value="tunai" <%= filter.metode_bayar==='tunai'?'selected':'' %>>Tunai</option>
+      <option value="transfer" <%= filter.metode_bayar==='transfer'?'selected':'' %>>Transfer</option>
+    </select>
+  </div>
+  <button class="bg-slate-200 px-4 py-2 rounded text-sm">Filter</button>
+  <a href="/pembayaran" class="text-sm text-slate-500">Reset</a>
+</form>
+
+<div class="card p-4 mb-4">
+  <span class="text-sm text-slate-500">Total transaksi Lunas (sesuai filter):</span>
+  <span class="text-lg font-bold text-green-700">Rp <%= total.toLocaleString('id-ID') %></span>
+</div>
+
+<div class="card p-4 overflow-x-auto">
+  <table class="tbl">
+    <thead><tr><th>Tanggal</th><th>No. Tiket</th><th>Pemohon</th><th>Nominal</th><th>Metode</th><th>Status</th><th>Petugas</th><th>Bukti</th><th></th></tr></thead>
+    <tbody>
+      <% list.forEach(pb => { %>
+      <tr>
+        <td><%= new Date(pb.tanggal_bayar).toLocaleString('id-ID') %></td>
+        <td><%= pb.nomor_tiket %></td>
+        <td><%= pb.penduduk_nama %></td>
+        <td>Rp <%= Number(pb.nominal).toLocaleString('id-ID') %></td>
+        <td class="capitalize"><%= pb.metode_bayar %></td>
+        <td><%- include('../partials/status_badge', { status: pb.status }) %></td>
+        <td><%= pb.petugas_nama %></td>
+        <td><% if (pb.bukti_file) { %><a href="<%= pb.bukti_file %>" target="_blank" class="text-blue-600 text-xs">Lihat</a><% } else { %>-<% } %></td>
+        <td class="whitespace-nowrap">
+          <% if (['superadmin','bendahara'].includes(currentUser.role)) { %>
+            <a href="/pembayaran/<%= pb.id %>/edit" class="text-blue-600 text-xs mr-2">Edit</a>
+            <% if (pb.status !== 'Dibatalkan') { %>
+            <form action="/pembayaran/<%= pb.id %>/batalkan" method="POST" class="inline" onsubmit="return confirm('Batalkan transaksi ini? Data tetap tersimpan untuk audit.')">
+              <button class="text-red-600 text-xs">Batalkan</button>
+            </form>
+            <% } %>
+          <% } %>
+        </td>
+      </tr>
+      <% }) %>
+      <% if (list.length === 0) { %><tr><td colspan="9" class="text-center text-slate-400 py-4">Belum ada data</td></tr><% } %>
+    </tbody>
+  </table>
+</div>
+<%- include('../partials/footer') %>

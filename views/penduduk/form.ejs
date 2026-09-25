@@ -1,0 +1,14 @@
+<%- include('../partials/header', { title: title }) %>
+<h1 class="text-xl font-bold mb-4"><%= title %></h1>
+<form action="<%= item ? '/penduduk/' + item.id : '/penduduk' %>" method="POST" class="card p-6 max-w-lg space-y-4">
+  <div><label class="block text-sm font-medium mb-1">NIK</label><input name="nik" required value="<%= item ? item.nik : '' %>" class="w-full border rounded px-3 py-2 text-sm" /></div>
+  <div><label class="block text-sm font-medium mb-1">Nama</label><input name="nama" required value="<%= item ? item.nama : '' %>" class="w-full border rounded px-3 py-2 text-sm" /></div>
+  <div><label class="block text-sm font-medium mb-1">Alamat</label><textarea name="alamat" rows="2" class="w-full border rounded px-3 py-2 text-sm"><%= item ? item.alamat : '' %></textarea></div>
+  <div><label class="block text-sm font-medium mb-1">RT/RW</label><input name="rt_rw" value="<%= item ? item.rt_rw : '' %>" class="w-full border rounded px-3 py-2 text-sm" /></div>
+  <div><label class="block text-sm font-medium mb-1">No. HP</label><input name="no_hp" value="<%= item ? item.no_hp : '' %>" class="w-full border rounded px-3 py-2 text-sm" /></div>
+  <div class="flex gap-2">
+    <button class="bg-slate-900 text-white text-sm px-4 py-2 rounded hover:bg-slate-800">Simpan</button>
+    <a href="/penduduk" class="text-sm px-4 py-2 rounded border">Batal</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>
